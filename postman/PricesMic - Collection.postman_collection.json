@@ -1,0 +1,106 @@
+{
+	"info": {
+		"_postman_id": "82f8d196-9370-439b-8e98-5f455431f4b2",
+		"name": "PricesMic - Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43361940"
+	},
+	"item": [
+		{
+			"name": "getPriceFiltered",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{domain}}/prices?brandId=1&productId=35455&applicationDate=2020-06-14 21:00:00",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"prices"
+					],
+					"query": [
+						{
+							"key": "brandId",
+							"value": "1"
+						},
+						{
+							"key": "productId",
+							"value": "35455"
+						},
+						{
+							"key": "applicationDate",
+							"value": "2020-06-14 21:00:00"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\n  'http://localhost:8080/prices?brandId=1&productId=35455&applicationDate=2020-07-18%2000%3A00%3A00%2B02' \\\n  -H 'accept: application/json'"
+			},
+			"response": []
+		},
+		{
+			"name": "getPriceById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{domain}}/prices/:priceId",
+					"host": [
+						"{{domain}}"
+					],
+					"path": [
+						"prices",
+						":priceId"
+					],
+					"variable": [
+						{
+							"key": "priceId",
+							"value": "19372cf6-0c3a-43f5-891e-1f25671da991"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\n  'http://localhost:8080/prices/19372cf6-0c3a-43f5-891e-1f25671da991' \\\n  -H 'accept: application/json'"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain",
+			"value": "http://localhost:8080",
+			"type": "default"
+		}
+	]
+}

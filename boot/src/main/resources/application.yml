@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pricesdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  server:
+    port: 8080
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=10m
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /index.html
+    url: /openapi.yaml
+    operationsSorter: method
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      pricesService:
+        failureRateThreshold: 50
+        waitDurationInOpenState: 1000ms
+        permittedNumberOfCallsInHalfOpenState: 3
+        minimumNumberOfCalls: 5
+        slidingWindowSize: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    enable:
+      cache: true

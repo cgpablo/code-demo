@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  prices-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:pricesdb
+      - SPRING_DATASOURCE_DRIVERCLASSNAME=org.h2.Driver
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=

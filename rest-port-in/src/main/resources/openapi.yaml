@@ -1,0 +1,213 @@
+openapi: 3.0.3
+info:
+  title: Prices API
+  description: API definition for price management
+  version: 1.0.0
+
+tags:
+  - name: price management
+    description: operations related to the management of prices
+
+paths:
+  /prices:
+    get:
+      tags:
+        - price management
+      summary: Method for retrieving prices filtered
+      description: This method retrieves the applicable price for a given product and brand given a specific date
+      operationId: getPricesByFilter
+      parameters:
+        - name: brandId
+          description: the brand id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 1
+        - name: productId
+          description: the product id
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+            example: 123
+        - name: applicationDate
+          description: the application date of the price
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$'
+            example: "2025-03-25T00:00:00Z"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplicablePriceResponseDTO"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+  /prices/{priceId}:
+    get:
+      tags:
+        - price management
+      summary:
+      description:
+      operationId: getPriceById
+      parameters:
+        - name: priceId
+          description: the price id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "19372cf6-0c3a-43f5-891e-1f25671da991"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PriceResponseDTO"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDTO"
+components:
+  schemas:
+    ErrorResponseDTO:
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorDTO"
+    ErrorDTO:
+      title: ErrorDTO
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+    ApplicablePriceResponseDTO:
+      type: object
+      properties:
+        applicablePrice:
+          $ref: "#/components/schemas/ApplicablePriceDTO"
+    PriceResponseDTO:
+      type: object
+      properties:
+        price:
+          $ref: "#/components/schemas/PriceDTO"
+    ApplicablePriceDTO:
+      type: object
+      properties:
+        brandId:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          example: "2025-03-20T00:00:00Z"
+        endDate:
+          type: string
+          example: "2025-06-14T00:00:00Z"
+        amount:
+          type: string
+          example: "35.50"
+        currency:
+          type: string
+          example: "EUR"
+    PriceDTO:
+      type: object
+      properties:
+        priceId:
+          type: string
+          example: "19372cf6-0c3a-43f5-891e-1f25671da991"
+        brandId:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        startDate:
+          type: string
+          example: "2025-03-20T00:00:00Z"
+        endDate:
+          type: string
+          example: "2025-06-14T00:00:00Z"
+        priceList:
+          type: integer
+          format: int64
+          example: 1
+        priority:
+          type: integer
+          example: 0
+        amount:
+          type: string
+          example: "35.50"
+        currency:
+          type: string
+          example: "EUR"
